@@ -27,19 +27,21 @@
         android:layout_height="wrap_content"
     />
 
-    <ListView
-        android:id="@+id/chat_list"
-        android:layout_below="@id/add_chat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        </ListView>
-
     <EditText
         android:id="@+id/chatbox"
         android:inputType="text"
-        android:layout_below="@id/chat_list"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+    />
+
+    <ListView
+        android:id="@+id/chat_list"
+        android:layout_below="@id/add_chat"
+        android:layout_above="@id/chatbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    />
+
 
 </RelativeLayout>
