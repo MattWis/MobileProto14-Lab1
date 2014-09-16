@@ -74,7 +74,6 @@ public class MyFragment extends Fragment {
                 String text = input.getText().toString();
                 if (!text.isEmpty()) {
                     getActivity().getSharedPreferences("Lab1", Context.MODE_PRIVATE).edit().putString("username", text).commit();
-                    Log.d("FUCKKK", text);
                 }
             }
         });

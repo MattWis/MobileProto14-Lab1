@@ -25,11 +25,12 @@ public class ChatAdapter extends ArrayAdapter<Chat> {
     }
 
     private class ChatHolder {
-        TextView name, message;
+        TextView name, message, timestamp;
 
         public void setChat(Chat chat) {
             this.name.setText(chat.username);
             this.message.setText(chat.message);
+            this.timestamp.setText(chat.timestamp);
         }
     }
 
@@ -42,6 +43,7 @@ public class ChatAdapter extends ArrayAdapter<Chat> {
             holder = new ChatHolder();
             holder.name = (TextView) cachedView.findViewById(R.id.username);
             holder.message = (TextView) cachedView.findViewById(R.id.chat_item);
+            holder.timestamp = (TextView) cachedView.findViewById(R.id.timestamp);
 
             cachedView.setTag(holder);
         } else {

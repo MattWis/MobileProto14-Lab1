@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract;
+
 import java.util.ArrayList;
 
 
@@ -18,7 +20,8 @@ public class DatabaseHandler {
     //All Fields
     private String[] allColumns = {
             Database.CHAT_USERNAME,
-            Database.CHAT_MESSAGE
+            Database.CHAT_MESSAGE,
+            Database.CHAT_TIME
     };
     //Public Constructor - create connection to Database
     public DatabaseHandler(Context context){
@@ -31,6 +34,7 @@ public class DatabaseHandler {
         ContentValues values = new ContentValues();
         values.put(Database.CHAT_USERNAME, chat.username);
         values.put(Database.CHAT_MESSAGE, chat.message);
+        values.put(Database.CHAT_TIME, chat.timestamp);
         database.insertWithOnConflict(Database.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
     }
 
@@ -42,6 +46,7 @@ public class DatabaseHandler {
         ContentValues values = new ContentValues();
         values.put(Database.CHAT_USERNAME, chat.username);
         values.put(Database.CHAT_MESSAGE, chat.message);
+        values.put(Database.CHAT_TIME, chat.timestamp);
         database.update(Database.TABLE_NAME, values, Database.CHAT_USERNAME + " like '%" + chat.username + "%'", null);
     }
     /**

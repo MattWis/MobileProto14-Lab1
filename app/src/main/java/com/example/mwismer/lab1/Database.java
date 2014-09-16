@@ -14,13 +14,15 @@ public class Database extends SQLiteOpenHelper {
     //Table Fields
     public static final String CHAT_USERNAME = "username";
     public static final String CHAT_MESSAGE = "message";
+    public static final String CHAT_TIME = "timestamp";
     //Database Info
-    private static final String DATABASE_NAME = "KittyAppDatabase";
+    private static final String DATABASE_NAME = "Lab1Database";
     private static final int DATABASE_VERSION = 1;
     // ModelDatabase creation sql statement
     private static final String DATABASE_CREATE = "create table "
             + TABLE_NAME + "("
             + CHAT_USERNAME + " TEXT NOT NULL UNIQUE, "
+            + CHAT_TIME + " TEXT NOT NULL, "
             + CHAT_MESSAGE + " TEXT NOT NULL );";
 
     //Default Constructor
