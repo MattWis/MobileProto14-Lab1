@@ -6,7 +6,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:id="@+id/parent"
     tools:context=".Lab1$PlaceholderFragment">
 
 
@@ -20,12 +19,21 @@
 
     <Button
         android:id="@+id/delete_chat"
-        android:text="Delete Item"
+        android:text="Delete"
+        android:layout_toRightOf="@id/add_chat"
+        android:layout_toEndOf="@id/add_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+    />
+
+    <Button
+        android:id="@+id/change_username"
+        android:text="Set Username"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-    />
+     />
 
     <EditText
         android:id="@+id/chatbox"
