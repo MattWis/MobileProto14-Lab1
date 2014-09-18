@@ -4,5 +4,10 @@
     <string name="app_name">Lab1</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="add_chat">Add Chat</string>
+    <string name="delete_chat">Delete Chat</string>
+    <string name="change_uname">Set Username</string>
+
+
 
 </resources>

@@ -9,14 +9,14 @@
 
     <Button
         android:id="@+id/add_chat"
-        android:text="Add Item"
+        android:text="@string/add_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
     />
 
     <Button
         android:id="@+id/delete_chat"
-        android:text="Delete"
+        android:text="@string/delete_chat"
         android:layout_toRightOf="@id/add_chat"
         android:layout_toEndOf="@id/add_chat"
         android:layout_width="wrap_content"
@@ -25,7 +25,7 @@
 
     <Button
         android:id="@+id/change_username"
-        android:text="Set Username"
+        android:text="@string/change_uname"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
