@@ -1,12 +1,15 @@
 package com.example.mwismer.lab1;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -24,7 +27,7 @@ public class MyFragment extends Fragment {
     public MyFragment() {  }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_lab1, container, false);
         final ListView chatList = (ListView) rootView.findViewById(R.id.chat_list);
@@ -42,6 +45,27 @@ public class MyFragment extends Fragment {
 
         final ChatAdapter chatAdapter = new ChatAdapter(getActivity(), R.layout.chat_item, values);
         chatList.setAdapter(chatAdapter);
+
+        chatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(final AdapterView<?> adapterView, final View view, int i, long l) {
+                final View editChat = ((LayoutInflater) view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.edit_chat, container, false);
+                final Chat chat = (Chat) adapterView.getAdapter().getItem(i);
+
+                ((EditText) editChat.findViewById(R.id.edit_uname)).setText(chat.username);
+                ((EditText) editChat.findViewById(R.id.edit_message)).setText(chat.message);
+
+                new AlertDialog.Builder(view.getContext()).setView(editChat).setPositiveButton("Save Changes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Log.d("HI", "HI");
+                        chat.username = ((EditText) editChat.findViewById(R.id.edit_uname)).getText().toString();
+                        chat.message = ((EditText) editChat.findViewById(R.id.edit_message)).getText().toString();
+                        ((ChatAdapter.ChatHolder) view.getTag()).setChat(chat);
+                    }
+                }).create().show();
+            }
+        });
 
         final Button add = (Button) rootView.findViewById(R.id.add_chat);
         final EditText input = (EditText) rootView.findViewById(R.id.chatbox);

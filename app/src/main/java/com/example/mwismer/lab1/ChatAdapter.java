@@ -24,7 +24,7 @@ public class ChatAdapter extends ArrayAdapter<Chat> {
         this.context = context;
     }
 
-    private class ChatHolder {
+    public class ChatHolder {
         TextView name, message, timestamp;
 
         public void setChat(Chat chat) {
