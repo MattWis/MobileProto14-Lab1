@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -51,6 +52,7 @@ public class MyFragment extends Fragment {
             public void onItemClick(final AdapterView<?> adapterView, final View view, int i, long l) {
                 final View editChat = ((LayoutInflater) view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.edit_chat, container, false);
                 final Chat chat = (Chat) adapterView.getAdapter().getItem(i);
+                final int position = i;
 
                 ((EditText) editChat.findViewById(R.id.edit_uname)).setText(chat.username);
                 ((EditText) editChat.findViewById(R.id.edit_message)).setText(chat.message);
@@ -58,11 +60,19 @@ public class MyFragment extends Fragment {
                 new AlertDialog.Builder(view.getContext()).setView(editChat).setPositiveButton("Save Changes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.d("HI", "HI");
                         chat.username = ((EditText) editChat.findViewById(R.id.edit_uname)).getText().toString();
                         chat.message = ((EditText) editChat.findViewById(R.id.edit_message)).getText().toString();
                         ((ChatAdapter.ChatHolder) view.getTag()).setChat(chat);
                     }
+                }).setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ChatAdapter adapter = (ChatAdapter) adapterView.getAdapter();
+                        adapter.remove(adapter.getItem(position));
+                    }
+                }).setNeutralButton("Exit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) { }
                 }).create().show();
             }
         });
@@ -80,14 +90,6 @@ public class MyFragment extends Fragment {
                     db.addChat(chat);
                     input.getText().clear();
                 }
-            }
-        });
-
-        final Button delete = (Button) rootView.findViewById(R.id.delete_chat);
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                chatAdapter.removeLast();
             }
         });
 

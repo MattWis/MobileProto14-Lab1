@@ -14,14 +14,6 @@
         android:layout_height="wrap_content"
     />
 
-    <Button
-        android:id="@+id/delete_chat"
-        android:text="@string/delete_chat"
-        android:layout_toRightOf="@id/add_chat"
-        android:layout_toEndOf="@id/add_chat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-    />
 
     <Button
         android:id="@+id/change_username"
