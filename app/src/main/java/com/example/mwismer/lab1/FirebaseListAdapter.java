@@ -1,13 +1,16 @@
 package com.example.mwismer.lab1;
 
 import android.app.Activity;
+import android.os.DropBoxManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 
@@ -32,14 +35,13 @@ import java.util.Map;
  */
 public abstract class FirebaseListAdapter<T> extends BaseAdapter {
 
-    private Query ref;
+    private Firebase ref;
     private Class<T> modelClass;
     private int layout;
     private LayoutInflater inflater;
     private List<T> models;
     private Map<String, T> modelNames;
     private ChildEventListener listener;
-
 
     /**
      * @param ref The Firebase location to watch for data changes. Can also be a slice of a location, using some
@@ -49,7 +51,7 @@ public abstract class FirebaseListAdapter<T> extends BaseAdapter {
      *               instance of the corresponding view with the data from an instance of modelClass.
      * @param activity The activity containing the ListView
      */
-    public FirebaseListAdapter(Query ref, Class<T> modelClass, int layout, Activity activity) {
+    public FirebaseListAdapter(Firebase ref, Class<T> modelClass, int layout, Activity activity) {
         this.ref = ref;
         this.modelClass = modelClass;
         this.layout = layout;
@@ -144,13 +146,24 @@ public abstract class FirebaseListAdapter<T> extends BaseAdapter {
         modelNames.clear();
     }
 
+    public void remove(T model) {
+        Log.d("HI", model.toString());
+        if (modelNames.containsValue(model)) {
+            for (Map.Entry<String, T> entry: modelNames.entrySet()) {
+                if (entry.getValue().equals(model)) {
+                    ref.child(entry.getKey()).removeValue();
+                }
+            }
+        }
+    }
+
     @Override
     public int getCount() {
         return models.size();
     }
 
     @Override
-    public Object getItem(int i) {
+    public T getItem(int i) {
         return models.get(i);
     }
 

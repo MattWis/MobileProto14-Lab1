@@ -1,5 +1,8 @@
 package com.example.mwismer.lab1;
 
+import com.firebase.client.Firebase;
+import com.firebase.client.Query;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -25,9 +28,14 @@ public class Chat {
 
     public String getTimestamp() { return timestamp; }
 
-//    public Chat(String uname, String textwall) {
-//        this.username = uname;
-//        this.message = textwall;
-//        this.timestamp = new SimpleDateFormat("MM/dd, HH:mm").format(new Date());
-//    }
+    public void sendToFirebase(Firebase ref) {
+        Firebase newChat = ref.push();
+        newChat.setValue(this);
+    }
+
+    public Chat(String uname, String textwall) {
+        this.name = uname;
+        this.message = textwall;
+        this.timestamp = new SimpleDateFormat("MM/dd, HH:mm").format(new Date());
+    }
 }

@@ -15,15 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-
 /**
  * Created by mwismer on 9/11/14.
  */
@@ -36,34 +28,10 @@ public class MyFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_lab1, container, false);
         final ListView chatList = (ListView) rootView.findViewById(R.id.chat_list);
 
-        final ArrayList<Chat> values;
-        values = new ArrayList<Chat>(Arrays.asList(new Chat[] {}));
-
-
-
         final Firebase chatBase = new Firebase("https://mobprotochat.firebaseio.com/").child("chats");
 
         final ChatAdapter chatAdapter = new ChatAdapter(chatBase, getActivity(), R.layout.chat_item);
         chatList.setAdapter(chatAdapter);
-
-//        chatBase.child("chats").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                chatAdapter.clear();
-//                for (DataSnapshot chat_snapshot: dataSnapshot.getChildren()) {
-//                    String name = (String) chat_snapshot.child("name").getValue();
-//                    String message = (String) chat_snapshot.child("message").getValue();
-//                    String timestamp = (String) chat_snapshot.child("timestamp").getValue();
-//                    Chat chat = new Chat(name, message, timestamp);
-//                    chatAdapter.add(chat);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(FirebaseError firebaseError) {
-//            }
-//        });
 
         chatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -81,12 +49,13 @@ public class MyFragment extends Fragment {
                     chat.name = ((EditText) editChat.findViewById(R.id.edit_uname)).getText().toString();
                     chat.message = ((EditText) editChat.findViewById(R.id.edit_message)).getText().toString();
                     ((ChatAdapter.ChatHolder) view.getTag()).setChat(chat);
+                    //TODO: Persist edits
                     }
                 }).setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-//                    ChatAdapter adapter = (ChatAdapter) adapterView.getAdapter();
-//                    adapter.remove(adapter.getItem(position));
+                    ChatAdapter adapter = (ChatAdapter) adapterView.getAdapter();
+                    adapter.remove((Chat) adapter.getItem(position));
                     }
                 }).setNeutralButton("Exit", new DialogInterface.OnClickListener() {
                     @Override
@@ -103,8 +72,8 @@ public class MyFragment extends Fragment {
                 String text = input.getText().toString();
                 if (!text.isEmpty()) {
                     String username = getActivity().getSharedPreferences("Lab1", Context.MODE_PRIVATE).getString("username", "default");
-//                    Chat chat = new Chat(username, text);
-//                    chatBase.push().setValue(chat);
+                    Chat chat = new Chat(username, text);
+                    chat.sendToFirebase(chatBase);
                     input.getText().clear();
                 }
             }

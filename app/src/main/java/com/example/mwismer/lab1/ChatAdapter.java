@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.firebase.client.Firebase;
 import com.firebase.client.Query;
 
 import org.w3c.dom.Text;
@@ -22,7 +23,7 @@ import java.util.List;
 public class ChatAdapter extends FirebaseListAdapter<Chat> {
 
     Context context;
-    public ChatAdapter(Query ref, Activity activity, int layout) {
+    public ChatAdapter(Firebase ref, Activity activity, int layout) {
         super(ref, Chat.class, layout, activity);
         this.context = activity.getApplicationContext();
     }
