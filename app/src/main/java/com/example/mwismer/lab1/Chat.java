@@ -7,17 +7,27 @@ import java.util.Date;
  * Created by mwismer on 9/15/14.
  */
 public class Chat {
-    String username, message, timestamp;
+    String name, message, timestamp;
 
-    public Chat(String uname, String textwall, String time) {
-        this.username = uname;
-        this.message = textwall;
-        this.timestamp = time;
+
+    //Weird constructor and getters needed for FirebaseListAdapter
+    private Chat () { }
+
+    Chat(String name, String message, String timestamp) {
+        this.name = name;
+        this.message = message;
+        this.timestamp = timestamp;
     }
 
-    public Chat(String uname, String textwall) {
-        this.username = uname;
-        this.message = textwall;
-        this.timestamp = new SimpleDateFormat("MM/dd, HH:mm").format(new Date());
-    }
+    public String getMessage() { return  message; }
+
+    public String getName() { return name; }
+
+    public String getTimestamp() { return timestamp; }
+
+//    public Chat(String uname, String textwall) {
+//        this.username = uname;
+//        this.message = textwall;
+//        this.timestamp = new SimpleDateFormat("MM/dd, HH:mm").format(new Date());
+//    }
 }

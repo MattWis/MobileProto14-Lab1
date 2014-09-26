@@ -1,5 +1,6 @@
 package com.example.mwismer.lab1;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.Layout;
 import android.util.Log;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.firebase.client.Query;
+
 import org.w3c.dom.Text;
 
 import java.util.List;
@@ -16,47 +19,43 @@ import java.util.List;
 /**
  * Created by mwismer on 9/11/14.
  */
-public class ChatAdapter extends ArrayAdapter<Chat> {
+public class ChatAdapter extends FirebaseListAdapter<Chat> {
 
     Context context;
-    public ChatAdapter(Context context, int resource, List<Chat> objects) {
-        super(context, resource, objects);
-        this.context = context;
+    public ChatAdapter(Query ref, Activity activity, int layout) {
+        super(ref, Chat.class, layout, activity);
+        this.context = activity.getApplicationContext();
     }
 
     public class ChatHolder {
         TextView name, message, timestamp;
 
         public void setChat(Chat chat) {
-            this.name.setText(chat.username);
+            this.name.setText(chat.name);
             this.message.setText(chat.message);
             this.timestamp.setText(chat.timestamp);
         }
     }
 
     @Override
-    public View getView(int position, View cachedView, ViewGroup parent) {
+    protected  void populateView(View view, Chat chat) {
         ChatHolder holder;
-        if (cachedView == null) {
-            cachedView = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.chat_item, parent, false);
-
+        if (view.getTag() == null) {
             holder = new ChatHolder();
-            holder.name = (TextView) cachedView.findViewById(R.id.username);
-            holder.message = (TextView) cachedView.findViewById(R.id.chat_item);
-            holder.timestamp = (TextView) cachedView.findViewById(R.id.timestamp);
+            holder.name = (TextView) view.findViewById(R.id.username);
+            holder.message = (TextView) view.findViewById(R.id.chat_item);
+            holder.timestamp = (TextView) view.findViewById(R.id.timestamp);
 
-            cachedView.setTag(holder);
+            view.setTag(holder);
         } else {
-            holder = (ChatHolder) cachedView.getTag();
+            holder = (ChatHolder) view.getTag();
         }
-        holder.setChat(getItem(position));
-
-        return cachedView;
+        holder.setChat(chat);
     }
 
     public void removeLast() {
         if (getCount() > 0) {
-            remove(getItem(getCount() - 1));
+            //remove(getItem(getCount() - 1));
         }
     }
 }
