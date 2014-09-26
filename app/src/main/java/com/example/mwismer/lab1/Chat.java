@@ -1,7 +1,6 @@
 package com.example.mwismer.lab1;
 
 import com.firebase.client.Firebase;
-import com.firebase.client.Query;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

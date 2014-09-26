@@ -2,20 +2,10 @@ package com.example.mwismer.lab1;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.Layout;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.firebase.client.Firebase;
-import com.firebase.client.Query;
-
-import org.w3c.dom.Text;
-
-import java.util.List;
 
 /**
  * Created by mwismer on 9/11/14.
